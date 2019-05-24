@@ -1,0 +1,108 @@
+<html lang="en">
+<head>
+<!--    <meta name="google-signin-scope" content="profile email">-->
+<!--    <meta name="google-signin-client_id" content="1042305458362-i0pfr9vv8kh9tila6gpcd7f0kigfeuad.apps.googleusercontent.com">-->
+<!--    <script src="https://apis.google.com/js/platform.js" async defer></script>-->
+<!--    <script-->
+<!--            src="https://code.jquery.com/jquery-3.3.1.js"-->
+<!--            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="x-->
+<!--            crossorigin="anonymous"></script>-->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+    </script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
+    </script>
+    <script>
+      let auth2 = '';
+      function start() {
+        gapi.load('auth2', () => {
+          gapi.auth2.init({
+            client_id: '1042305458362-f821opoani97teknq4a8h9gtj49v96h3.apps.googleusercontent.com',
+            // Scopes to request in addition to 'profile' and 'email'
+            scope: 'https://www.googleapis.com/auth/calendar email profile',
+            response_type: 'code permission',
+          }).then((e) => auth2 = e);
+
+        });
+      }
+    </script>
+</head>
+<body>
+<!--<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>-->
+
+<button id="myGoogleButton">Sign in with Google</button>
+
+<script>
+
+  $('#myGoogleButton').click(function(e) {
+    console.log(auth2);
+    // signInCallback defined in step 6.
+    auth2.grantOfflineAccess({
+      scope: 'https://www.googleapis.com/auth/calendar email profile',
+    }).then((e) => {
+      console.log(e.code)
+
+      $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8000/Code.php?code='+e.code,
+        // Always include an `X-Requested-With` header in every AJAX request,
+        // to protect against CSRF attacks.
+        dataType: 'jsonp',
+        success: function(result) {
+          console.log(result)
+          // Handle or verify the server response.
+        }
+      });
+
+    });
+    e.preventDefault()
+  });
+
+  function onSignIn(googleUser) {
+  }
+
+
+  // function onSignIn(googleUser) {
+  //   // Useful data for your client-side scripts:
+  //   var profile = googleUser.getBasicProfile();
+  //   console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+  //   console.log('Full Name: ' + profile.getName());
+  //   console.log('Given Name: ' + profile.getGivenName());
+  //   console.log('Family Name: ' + profile.getFamilyName());
+  //   console.log("Image URL: " + profile.getImageUrl());
+  //   console.log("Email: " + profile.getEmail());
+  //
+  //   // The ID token you need to pass to your backend:
+  //   var id_token = googleUser.getAuthResponse().id_token;
+  //   console.log("ID Token: " + id_token);
+  //   console.log(googleUser.getAuthResponse());
+  //
+  //
+  //   var NEW_SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
+  //
+  //   googleUser.grant({'scope': NEW_SCOPES});
+  //
+  //   console.log(googleUser)
+  //
+  //
+  //   // $.ajax({
+  //   //   method: "POST",
+  //   //   url: "https://www.googleapis.com/oauth2/v4/token?code="+id_token+"&" +
+  //   //     "client_id=1042305458362-i0pfr9vv8kh9tila6gpcd7f0kigfeuad.apps.googleusercontent.com&" +
+  //   //     "client_secret=AxMOzqBeNuD_Cwi74cKOQwy8&" +
+  //   //     "redirect_uri=https://oauth2.example.com/code&" +
+  //   //     "grant_type=authorization_code",
+  //   //   dataType: 'json',
+  //   //   headers: {
+  //   //     'Content-Type': 'application/x-www-form-urlencoded'
+  //   //   }
+  //   // })
+  //   //   .done(function( msg ) {
+  //   //     console.log(msg);
+  //   //   });
+  //
+  // };
+</script>
+</body>
+</html>

@@ -1,5 +1,21 @@
 [![Build Status](https://travis-ci.org/googleapis/google-api-php-client.svg?branch=master)](https://travis-ci.org/googleapis/google-api-php-client)
 
+
+# JS Front Code in google.html
+
+# Back office Server-side for offline connection
+
+* /exemples/Code.php
+
+Make sur that if you use the code (to get the refresh token google) you set 
+```
+$client->setRedirectUri('postmessage'); /// <-------
+```
+
+
+
+
+
 # Google APIs Client Library for PHP #
 
 The Google API Client Library enables you to work with Google APIs such as Google+, Drive, or YouTube on your server.
