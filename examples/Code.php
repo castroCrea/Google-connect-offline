@@ -33,8 +33,8 @@ $client = new Google_Client();
 // credentials page, and copy the client ID, client secret,
 // redirect URI, and API key. Then paste them into the
 // following code.
-$client->setClientId('1042305458362-f821opoani97teknq4a8h9gtj49v96h3.apps.googleusercontent.com');
-$client->setClientSecret('oFGBWkXTT9d7xyJbDeztrCEJ');
+$client->setClientId('API_CLIENT_ID');
+$client->setClientSecret('API_CLIENT_SECRET');
 $client->setRedirectUri('postmessage'); /// <-------
 $client->setAccessType("offline");
 
